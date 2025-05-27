@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login correcto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #d4edda;
+            color: #155724;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .message-box {
+            background: #c3e6cb;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #28a745;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-box">
+        <h1>¡Bienvenido, <span th:text="${username}">Usuario</span>!</h1>
+        <p>Usuario y contraseña correctos.</p>
+    </div>
+</body>
+</html>

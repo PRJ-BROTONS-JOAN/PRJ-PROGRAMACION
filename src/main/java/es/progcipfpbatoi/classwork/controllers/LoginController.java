@@ -1,6 +1,7 @@
 package es.progcipfpbatoi.classwork.controllers;
 
 import java.awt.List;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,27 +34,31 @@ public class LoginController {
 
     @PostMapping("/login")
     public String procesarLogin(@RequestParam String username,
-                               @RequestParam String password,
-                               Model model) {
-        try {
-            Connection conn = mariaDBConnection.getConnection();
+                                @RequestParam String password,
+                                Model model) {
+        try (Connection conn = mariaDBConnection.getConnection()) {
+            String sql = "SELECT * FROM USUARIO WHERE username = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, username);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (!rs.next()) {
+                        model.addAttribute("error", true);
+                        return "login";
+                    }
 
-            // Buscar usuario con contraseña cifrada (SHA-256 como requerido)
-            String sql = "SELECT * FROM USUARIO WHERE username = ? AND password = SHA2(?, 256)";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
+                    String hashPasswordDB = rs.getString("password");
+                    String passwordHash = sha256(password);
 
-            if (!rs.next()) {
-                // Usuario o contraseña incorrectos
-                model.addAttribute("error", true);
-                return "login";
+                    if (!passwordHash.equalsIgnoreCase(hashPasswordDB)) {
+                        model.addAttribute("error", true);
+                        return "login";
+                    }
+
+                    // Usuario y contraseña correctos, redirigir a página éxito
+                    model.addAttribute("username", username);
+                    return "loginSuccess";
+                }
             }
-
-            // Autenticación exitosa - redirigir a la página principal
-            return "redirect:/main";
-
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("error", true);
@@ -61,49 +66,22 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/main")
-    public String mostrarMain(Model model) {
+    private String sha256(String base) {
         try {
-            Connection conn = mariaDBConnection.getConnection();
-            
-            // Obtener películas más recomendadas
-            String peliculasSql = "SELECT * FROM PRODUCCION WHERE tipo = 'pelicula' ORDER BY valoracion_total DESC LIMIT 4";
-            PreparedStatement peliculasStmt = conn.prepareStatement(peliculasSql);
-            ResultSet peliculasRs = peliculasStmt.executeQuery();
-            
-            ArrayList<Map<String, Object>> peliculas = new ArrayList<>();
-            while (peliculasRs.next()) {
-                Map<String, Object> pelicula = new HashMap<>();
-                pelicula.put("id", peliculasRs.getInt("id"));
-                pelicula.put("titulo", peliculasRs.getString("titulo"));
-                pelicula.put("poster", peliculasRs.getString("poster"));
-                pelicula.put("valoracion", peliculasRs.getFloat("valoracion_total"));
-                peliculas.add(pelicula);
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
             }
-            
-            // Obtener series más recomendadas
-            String seriesSql = "SELECT * FROM PRODUCCION WHERE tipo = 'serie' ORDER BY valoracion_total DESC LIMIT 4";
-            PreparedStatement seriesStmt = conn.prepareStatement(seriesSql);
-            ResultSet seriesRs = seriesStmt.executeQuery();
-            
-            ArrayList<Map<String, Object>> series = new ArrayList<>();
-            while (seriesRs.next()) {
-                Map<String, Object> serie = new HashMap<>();
-                serie.put("id", seriesRs.getInt("id"));
-                serie.put("titulo", seriesRs.getString("titulo"));
-                serie.put("poster", seriesRs.getString("poster"));
-                serie.put("valoracion", seriesRs.getFloat("valoracion_total"));
-                series.add(serie);
-            }
-            
-            model.addAttribute("peliculas", peliculas);
-            model.addAttribute("series", series);
-            
-            return "main";
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/login";
+
+            return hexString.toString();
+
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 
