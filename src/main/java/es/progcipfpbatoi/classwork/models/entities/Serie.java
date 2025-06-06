@@ -1,17 +1,17 @@
 package es.progcipfpbatoi.classwork.models.entities;
 
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class Serie extends Produccion {
     private List<Temporada> temporadas;
 
-    public Serie(int id, String titulo, String calificacion, 
-                Date fechaLanzamiento, int duracion, String genero, 
+    public Serie(int idserie, String titulo, String calificacion, 
+    		LocalDate fechaLanzamiento, int duracion, String genero, 
                 String guion, String productora, String urlTrailer, 
                 String poster, float valoracionTotal) {
-        super(id, titulo, Tipo.serie, calificacion, fechaLanzamiento, 
+        super(idserie, titulo, Tipo.serie, calificacion, fechaLanzamiento, 
               duracion, genero, guion, productora, urlTrailer, poster, 
               valoracionTotal);
     }

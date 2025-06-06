@@ -275,46 +275,96 @@
 </head>
 <body>
 
-<header>
-    <div class="logo">BatoiFlix</div>
-    <nav>
-        <ul>
-            <li><a href="#">Películas</a>
-                <ul>
-                    <li><a href="#">Acción</a></li>
-                    <li><a href="#">Comedia</a></li>
-                    <li><a href="#">Drama</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Series</a>
-                <ul>
-                    <li><a href="#">Documentales</a></li>
-                    <li><a href="#">Thrillers</a></li>
-                    <li><a href="#">Animación</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Mi cuenta</a>
-                <ul>
-                    <li><a href="#">Perfil</a></li>
-                    <li><a th:href="@{/logout}">Cerrar sesión</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-    <div class="tools">
-        <input type="text" id="searchInput" placeholder="Buscar...">
-    </div>
-</header>
+	<header>
+	    <div class="logo">BatoiFlix</div>
+
+	    <nav>
+	        <ul>
+				<li><a href="/peliculas" th:href="@{/peliculas}">Películas</a></li>
+				<li><a href="/series" th:href="@{/series}">Series</a></li>
+				<li><a href="#">Mi cuenta</a>
+						    <ul>
+						        	  
+						              <li><a th:href="@{/logout}">Cerrar sesión</a></li>
+						         </ul>
+						    </li>
+	        </ul>
+	    </nav>
+
+	    <div class="tools">
+	        <input type="text" id="searchInput" placeholder="Buscar...">
+	    </div>
+
+	    <!-- NUEVO: Filtro de géneros -->
+	    <div class="tools" style="margin-left: 20px;">
+	        <select id="genreFilter">
+	            <option value="">Filtrar por género</option>
+	            <option value="Acción">Acción</option>
+	            <option value="Comedia">Comedia</option>
+	            <option value="Drama">Drama</option>
+	            <option value="Documental">Documental</option>
+	            <option value="Animación">Animación</option>
+	            <option value="Thriller">Thriller</option>
+	        </select>
+	    </div>
+		
+	</header>
 
 <main>
     <h2 class="section-title">Más recomendadas</h2>
     <div class="content-grid">
-        <!-- Contenido dinámico con Thymeleaf -->
+        <div th:each="produccion : ${recommended}" class="content-card" th:attr="data-title=${produccion.titulo}">
+            <div class="card-image" th:style="'background-image: url(' + ${produccion.poster} + ')'"></div>
+            <div class="card-info">
+                <div class="card-title" th:text="${produccion.titulo}"></div>
+                <div class="card-meta">
+                    <span th:text="${produccion.fechaLanzamiento}"></span>
+                    <span th:text="${produccion.calificacion}"></span>
+                </div>
+            </div>
+            <div class="card-actions">
+                <button>Ver</button>
+            </div>
+        </div>
     </div>
+
+	<h2 class="section-title">Peliculas</h2>
+	    <div class="content-grid">
+	        <div th:each="produccion : ${movies}" class="content-card" th:attr="data-title=${produccion.titulo}">
+	            <div class="card-image" th:style="'background-image: url(' + ${produccion.poster} + ')'"></div>
+	            <div class="card-info">
+	                <div class="card-title" th:text="${produccion.titulo}"></div>
+	                <div class="card-meta">
+	                    <span th:text="${produccion.fechaLanzamiento}"></span>
+	                    <span th:text="${produccion.calificacion}"></span>
+	                </div>
+	            </div>
+	            <div class="card-actions">
+	                <button>Ver</button>
+	            </div>
+	        </div>
+	    </div>
+
+		<h2 class="section-title">Series</h2>
+		    <div class="content-grid">
+		        <div th:each="produccion : ${series}" class="content-card" th:attr="data-title=${produccion.titulo}">
+		            <div class="card-image" th:style="'background-image: url(' + ${produccion.poster} + ')'"></div>
+		            <div class="card-info">
+		                <div class="card-title" th:text="${produccion.titulo}"></div>
+		                <div class="card-meta">
+		                    <span th:text="${produccion.fechaLanzamiento}"></span>
+		                    <span th:text="${produccion.calificacion}"></span>
+		                </div>
+		            </div>
+		            <div class="card-actions">
+		                <button>Ver</button>
+		            </div>
+		        </div>
+		    </div>
 </main>
 
 <script>
-    // Búsqueda dinámica
+    // Filtro de búsqueda en tiempo real
     document.getElementById('searchInput').addEventListener('input', function () {
         const query = this.value.toLowerCase();
         const cards = document.querySelectorAll('.content-card');
@@ -324,7 +374,7 @@
         });
     });
 
-    // Efecto de seguimiento del mouse para las tarjetas
+    // Efecto mouse (preparado)
     document.querySelectorAll('.content-card').forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();

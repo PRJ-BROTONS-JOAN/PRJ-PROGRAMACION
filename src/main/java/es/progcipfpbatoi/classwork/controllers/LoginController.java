@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import es.progcipfpbatoi.classwork.models.entities.Usuario;
-import es.progcipfpbatoi.classwork.models.entities.repositories.UsuarioRepository;
+import es.progcipfpbatoi.classwork.models.repositories.UsuarioRepository;
 
 @Controller
 public class LoginController {
@@ -38,6 +38,7 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String cerrarSesion() {
+    	
         return "redirect:/login";
     }
 }

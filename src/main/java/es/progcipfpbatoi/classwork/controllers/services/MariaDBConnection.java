@@ -33,5 +33,15 @@ public class MariaDBConnection {
             	
         return connection;
     }
+    
+    public void closeConnection() {
+    	try {
+    		connection.close();
+    	 } catch (SQLException exception) {
+             throw new RuntimeException(exception.getMessage());
+    	 }
+     
+    	
+    }
 
 }

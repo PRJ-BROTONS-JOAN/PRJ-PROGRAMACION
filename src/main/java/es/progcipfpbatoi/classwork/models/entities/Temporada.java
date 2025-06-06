@@ -1,5 +1,6 @@
 package es.progcipfpbatoi.classwork.models.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Temporada {
@@ -7,9 +8,9 @@ public class Temporada {
     private int numero;
     private int numCapitulos;
     private String plot;
-    private Date fechaLanzamiento;
+    private LocalDate fechaLanzamiento;
 
-    public Temporada(int id, int numero, int numCapitulos, String plot, Date fechaLanzamiento) {
+    public Temporada(int id, int numero, int numCapitulos, String plot, LocalDate fechaLanzamiento) {
         this.id = id;
         this.numero = numero;
         this.numCapitulos = numCapitulos;
@@ -34,7 +35,7 @@ public class Temporada {
         return plot;
     }
 
-    public Date getFechaLanzamiento() {
+    public LocalDate getFechaLanzamiento() {
         return fechaLanzamiento;
     }
 }

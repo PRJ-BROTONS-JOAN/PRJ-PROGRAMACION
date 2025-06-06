@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import es.progcipfpbatoi.classwork.models.entities.repositories.ProduccionRepository;
+import es.progcipfpbatoi.classwork.models.repositories.ProduccionRepository;
 
 @Controller
 public class DashboardController {
@@ -18,9 +18,9 @@ public class DashboardController {
 
     @GetMapping("/dashboard")
     public String mostrarDashboard(Model model) {
-        model.addAttribute("recommended", produccionRepository.getRecommendedContent());
-        model.addAttribute("movies", produccionRepository.getMovies());
-        model.addAttribute("series", produccionRepository.getSeries());
+        model.addAttribute("recommended", produccionRepository.findAllRecommendedProductions());
+        model.addAttribute("movies", produccionRepository.findAllMovies());
+        model.addAttribute("series", produccionRepository.findAllSeries());
         return "dashboard";
     }
 }

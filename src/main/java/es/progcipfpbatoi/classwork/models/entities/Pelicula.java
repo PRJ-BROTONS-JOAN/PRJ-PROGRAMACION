@@ -1,10 +1,11 @@
 package es.progcipfpbatoi.classwork.models.entities;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 public class Pelicula extends Produccion {
     public Pelicula(int id, String titulo, String calificacion, 
-                   Date fechaLanzamiento, int duracion, String genero, 
+    		LocalDate fechaLanzamiento, int duracion, String genero, 
                    String guion, String productora, String urlTrailer, 
                    String poster, float valoracionTotal) {
         super(id, titulo, Tipo.pelicula, calificacion, fechaLanzamiento, 

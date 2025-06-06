@@ -1,4 +1,4 @@
-package es.progcipfpbatoi.classwork.models.entities.repositories;
+package es.progcipfpbatoi.classwork.models.repositories;
 
 
 
@@ -22,8 +22,9 @@ public class UsuarioRepository {
     public Usuario findByUsername(String username) {
         String sql = "SELECT * FROM USUARIO WHERE username = ?";
         
-        try (Connection conn = mariaDBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        Connection conn = mariaDBConnection.getConnection();
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             
             stmt.setString(1, username);
             
@@ -44,4 +45,5 @@ public class UsuarioRepository {
         }
         return null;
     }
+
 }

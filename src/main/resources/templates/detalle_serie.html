@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${contenido.titulo}">Detalle Serie</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<main class="detalle-container">
+
+    <div class="detalle-header">
+        <img class="detalle-poster" th:src="${contenido.poster}" alt="Poster" />
+        <div class="detalle-info">
+            <h1 th:text="${contenido.titulo}"></h1>
+            <p><strong>Género:</strong> <span th:text="${contenido.genero}"></span></p>
+            <p><strong>Duración:</strong> <span th:text="${contenido.duracion} + ' min'"></span></p>
+            <p><strong>Calificación:</strong> <span th:text="${contenido.calificacion}"></span></p>
+            <p><strong>Fecha de lanzamiento:</strong> <span th:text="${contenido.fechaLanzamiento}"></span></p>
+            <p><strong>Guión:</strong> <span th:text="${contenido.guion}"></span></p>
+            <p><strong>Productora:</strong> <span th:text="${contenido.productora}"></span></p>
+            <p><strong>Valoración:</strong> <span th:text="${contenido.valoracionTotal}"></span></p>
+
+            <div>
+                <h4>Directores:</h4>
+                <ul>
+                    <li th:each="director : ${contenido.directores}" th:text="${director.nombre}"></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>Actores:</h4>
+                <ul>
+                    <li th:each="actor : ${contenido.actores}" th:text="${actor.nombre}"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="detalle-temporadas">
+        <h2>Temporadas</h2>
+        <div th:if="${contenido.temporadas.size() == 0}">
+            <p>No hay temporadas disponibles.</p>
+        </div>
+        <div th:each="temporada : ${contenido.temporadas}" class="temporada-card">
+            <h3 th:text="'Temporada ' + ${temporada.numero}"></h3>
+            <p><strong>Capítulos:</strong> <span th:text="${temporada.numCapitulos}"></span></p>
+            <p><strong>Fecha de estreno:</strong> <span th:text="${temporada.fechaLanzamiento}"></span></p>
+            <p><strong>Resumen:</strong></p>
+            <p th:text="${temporada.plot}"></p>
+        </div>
+    </div>
+
+</main>
+
+</body>
+</html>

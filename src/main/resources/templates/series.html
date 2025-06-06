@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Series</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	    <style>
+	        :root {
+	            --primary: #ff3c00;
+	            --primary-hover: #ff5c2b;
+	            --bg-dark: #0f2027;
+	            --bg-gradient: linear-gradient(145deg, #0f2027, #203a43, #2c5364);
+	            --card-bg: rgba(255, 255, 255, 0.05);
+	            --text-light: #ffffff;
+	            --text-muted: #cccccc;
+	            --header-bg: rgba(0, 0, 0, 0.85);
+	            --transition: all 0.3s ease;
+	            --border-radius: 10px;
+	            --box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+	        }
+
+	        * {
+	            margin: 0;
+	            padding: 0;
+	            box-sizing: border-box;
+	        }
+
+	        body {
+	            font-family: 'Poppins', sans-serif;
+	            background: var(--bg-gradient);
+	            color: var(--text-light);
+	            min-height: 100vh;
+	            line-height: 1.6;
+	        }
+
+	        header {
+	            background-color: var(--header-bg);
+	            backdrop-filter: blur(10px);
+	            display: flex;
+	            justify-content: space-between;
+	            align-items: center;
+	            padding: 18px 40px;
+	            position: sticky;
+	            top: 0;
+	            z-index: 1000;
+	            box-shadow: var(--box-shadow);
+	            flex-wrap: wrap;
+	        }
+
+	        .logo {
+	            font-size: 28px;
+	            font-weight: 700;
+	            color: var(--primary);
+	        }
+
+	        nav ul {
+	            display: flex;
+	            list-style: none;
+	            gap: 25px;
+	        }
+
+	        nav ul li {
+	            position: relative;
+	        }
+
+	        nav ul li a {
+	            color: var(--text-light);
+	            text-decoration: none;
+	            font-weight: 500;
+	            transition: var(--transition);
+	            padding: 8px 0;
+	            display: block;
+	        }
+
+	        nav ul li a:hover {
+	            color: var(--primary);
+	        }
+
+	        nav ul li:hover > ul {
+	            display: block;
+	            animation: fadeIn 0.3s ease;
+	        }
+
+	        nav ul ul {
+	            display: none;
+	            position: absolute;
+	            top: 100%;
+	            left: 0;
+	            background-color: rgba(0, 0, 0, 0.9);
+	            padding: 10px 0;
+	            border-radius: var(--border-radius);
+	            min-width: 180px;
+	            box-shadow: var(--box-shadow);
+	        }
+
+	        nav ul ul li {
+	            margin: 0;
+	        }
+
+	        nav ul ul li a {
+	            padding: 8px 20px;
+	            white-space: nowrap;
+	        }
+
+	        .tools {
+	            margin-top: 10px;
+	            position: relative;
+	        }
+
+	        .tools input[type="text"] {
+	            padding: 10px 15px 10px 35px;
+	            border-radius: 20px;
+	            border: none;
+	            outline: none;
+	            background-color: rgba(255, 255, 255, 0.15);
+	            color: white;
+	            font-size: 14px;
+	            transition: var(--transition);
+	        }
+
+	        .tools input[type="text"]:focus {
+	            background-color: rgba(255, 255, 255, 0.25);
+	        }
+
+	        .tools input[type="text"]::placeholder {
+	            color: var(--text-muted);
+	        }
+
+	        .tools::before {
+	            content: "\f002";
+	            font-family: "Font Awesome 6 Free";
+	            font-weight: 900;
+	            position: absolute;
+	            left: 12px;
+	            top: 50%;
+	            transform: translateY(-50%);
+	            color: var(--text-muted);
+	            font-size: 14px;
+	        }
+
+	        main {
+	            padding: 40px;
+	            animation: fadeIn 0.8s ease;
+	        }
+
+	        @keyframes fadeIn {
+	            from { opacity: 0; }
+	            to { opacity: 1; }
+	        }
+
+	        .section-title {
+	            font-size: 24px;
+	            margin-bottom: 25px;
+	            padding-left: 15px;
+	            position: relative;
+	            font-weight: 600;
+	        }
+
+	        .section-title::before {
+	            content: '';
+	            position: absolute;
+	            left: 0;
+	            top: 0;
+	            height: 100%;
+	            width: 4px;
+	            background: var(--primary);
+	            border-radius: 4px;
+	        }
+
+	        .content-grid {
+	            display: grid;
+	            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	            gap: 25px;
+	        }
+
+	        .content-card {
+	            background: var(--card-bg);
+	            border-radius: var(--border-radius);
+	            display: flex;
+	            flex-direction: column;
+	            box-shadow: var(--box-shadow);
+	            overflow: hidden;
+	            transition: var(--transition);
+	            border: 1px solid rgba(255, 255, 255, 0.05);
+	        }
+
+	        .content-card:hover {
+	            transform: translateY(-5px);
+	            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+	        }
+
+	        .card-image {
+	            height: 300px;
+	            background-size: cover;
+	            background-position: center;
+	            position: relative;
+	        }
+
+	        .card-info {
+	            padding: 16px;
+	            flex-grow: 1;
+	        }
+
+	        .card-title {
+	            font-size: 18px;
+	            margin-bottom: 8px;
+	            font-weight: 500;
+	        }
+
+	        .card-meta {
+	            display: flex;
+	            justify-content: space-between;
+	            color: var(--text-muted);
+	            font-size: 14px;
+	        }
+
+	        .card-actions {
+	            display: flex;
+	            justify-content: space-around;
+	            padding: 12px 16px;
+	            border-top: 1px solid rgba(255, 255, 255, 0.1);
+	            background: rgba(0, 0, 0, 0.1);
+	        }
+
+	        .card-actions button {
+	            padding: 8px 16px;
+	            background-color: var(--primary);
+	            color: white;
+	            border: none;
+	            border-radius: 6px;
+	            font-weight: 500;
+	            cursor: pointer;
+	            transition: var(--transition);
+	        }
+
+	        .card-actions button:hover {
+	            background-color: var(--primary-hover);
+	        }
+
+	        @media (max-width: 768px) {
+	            header {
+	                flex-direction: column;
+	                align-items: flex-start;
+	                gap: 15px;
+	            }
+
+	            nav ul {
+	                flex-direction: column;
+	                gap: 10px;
+	            }
+
+	            nav ul ul {
+	                position: static;
+	                margin-top: 5px;
+	                margin-left: 15px;
+	                box-shadow: none;
+	                background: transparent;
+	            }
+
+	            .tools {
+	                width: 100%;
+	            }
+
+	            .tools input {
+	                width: 100%;
+	            }
+
+	            main {
+	                padding: 30px 20px;
+	            }
+	        }
+	    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/dashboard}">Inicio</a></li>
+            <li><a th:href="@{/peliculas}">Películas</a></li>
+            <li><a th:href="@{/series}">Series</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+        <h2 class="section-title">Series</h2>
+        <div class="content-grid">
+            <div th:each="produccion : ${series}" class="content-card" th:attr="data-title=${produccion.titulo}">
+                <div class="card-image" th:style="'background-image: url(' + ${produccion.poster} + ')'"></div>
+                <div class="card-info">
+                    <div class="card-title" th:text="${produccion.titulo}"></div>
+                    <div class="card-meta">
+                        <span th:text="${produccion.fechaLanzamiento}"></span>
+                        <span th:text="${produccion.calificacion}"></span>
+                    </div>
+                </div>
+                <div class="card-actions">
+					<a th:href="@{/contenidoSerie/{id}(id=${produccion.id})}">
+					    <button>Ver</button>
+					</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</main>
+</body>
+</html>

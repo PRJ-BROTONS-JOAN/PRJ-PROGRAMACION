@@ -1,14 +1,15 @@
 package es.progcipfpbatoi.classwork.models.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 public class Produccion {
-    private int id;
+    private int idproduccion;
     private String titulo;
     private Tipo tipo;
     private String calificacion;
-    private Date fechaLanzamiento;
+    private LocalDate fechaLanzamiento;
     private int duracion;
     private String genero;
     private String guion;
@@ -25,11 +26,11 @@ public class Produccion {
         pelicula, serie
     }
 
-    public Produccion(int id, String titulo, Tipo tipo, String calificacion, 
-                    Date fechaLanzamiento, int duracion, String genero, 
+    public Produccion(int idproduccion, String titulo, Tipo tipo, String calificacion, 
+                    LocalDate fechaLanzamiento, int duracion, String genero, 
                     String guion, String productora, String urlTrailer, 
                     String poster, float valoracionTotal) {
-        this.id = id;
+        this.idproduccion = idproduccion;
         this.titulo = titulo;
         this.tipo = tipo;
         this.calificacion = calificacion;
@@ -45,7 +46,7 @@ public class Produccion {
 
     // Getters y setters
     public int getId() {
-        return id;
+        return idproduccion;
     }
 
     public String getTitulo() {
@@ -60,7 +61,7 @@ public class Produccion {
         return calificacion;
     }
 
-    public Date getFechaLanzamiento() {
+    public LocalDate getFechaLanzamiento() {
         return fechaLanzamiento;
     }
 
