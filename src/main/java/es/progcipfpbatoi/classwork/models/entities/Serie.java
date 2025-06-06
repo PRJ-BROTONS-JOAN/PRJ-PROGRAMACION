@@ -8,13 +8,13 @@ public class Serie extends Produccion {
     private List<Temporada> temporadas;
 
     public Serie(int idserie, String titulo, String calificacion, 
-    		LocalDate fechaLanzamiento, int duracion, String genero, 
-                String guion, String productora, String urlTrailer, 
-                String poster, float valoracionTotal) {
-        super(idserie, titulo, Tipo.serie, calificacion, fechaLanzamiento, 
-              duracion, genero, guion, productora, urlTrailer, poster, 
-              valoracionTotal);
-    }
+            LocalDate fechaLanzamiento, int duracion, String genero, 
+            String guion, String productora, String urlTrailer, 
+            String poster, float valoracionTotal, String plataforma) {
+	   super(idserie, titulo, Tipo.serie, calificacion, fechaLanzamiento, 
+	         duracion, genero, guion, productora, urlTrailer, poster, 
+	         valoracionTotal, plataforma); // añadido plataforma
+	}
 
     public List<Temporada> getTemporadas() {
         return temporadas;

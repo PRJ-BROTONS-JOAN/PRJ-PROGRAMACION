@@ -1,8 +1,96 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title th:text="${contenido.titulo}">Detalle Serie</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .detalle-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+
+        .detalle-header {
+            display: flex;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .detalle-poster {
+            width: 300px;
+            height: auto;
+            object-fit: cover;
+            border-right: 1px solid #eee;
+        }
+
+        .detalle-info {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .detalle-info h1 {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #1e1e1e;
+        }
+
+        .detalle-info p {
+            margin: 0.4rem 0;
+        }
+
+        .detalle-info strong {
+            color: #555;
+        }
+
+        .detalle-info ul {
+            padding-left: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .detalle-temporadas {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            animation: slideUp 1s ease-in-out;
+        }
+
+        .temporada-card {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .temporada-card:hover {
+            transform: translateY(-5px);
+            background-color: #f9f9f9;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
@@ -18,6 +106,7 @@
             <p><strong>Fecha de lanzamiento:</strong> <span th:text="${contenido.fechaLanzamiento}"></span></p>
             <p><strong>Guión:</strong> <span th:text="${contenido.guion}"></span></p>
             <p><strong>Productora:</strong> <span th:text="${contenido.productora}"></span></p>
+            <p><strong>Plataforma:</strong> <span th:text="${contenido.plataforma}"></span></p>
             <p><strong>Valoración:</strong> <span th:text="${contenido.valoracionTotal}"></span></p>
 
             <div>
@@ -51,6 +140,29 @@
     </div>
 
 </main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Suavemente resaltar la plataforma
+        const plataformaSpan = document.querySelector("span[th\\:text='${contenido.plataforma}']");
+        if (plataformaSpan) {
+            plataformaSpan.style.backgroundColor = "#ffe9a0";
+            plataformaSpan.style.padding = "2px 6px";
+            plataformaSpan.style.borderRadius = "4px";
+            plataformaSpan.style.transition = "all 0.6s ease";
+        }
+
+        // Animación en hover de títulos
+        document.querySelectorAll(".temporada-card h3").forEach(h3 => {
+            h3.addEventListener("mouseenter", () => {
+                h3.style.color = "#0066cc";
+            });
+            h3.addEventListener("mouseleave", () => {
+                h3.style.color = "";
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

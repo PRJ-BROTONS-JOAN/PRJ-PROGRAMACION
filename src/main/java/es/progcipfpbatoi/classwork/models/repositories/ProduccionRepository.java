@@ -68,7 +68,7 @@ public class ProduccionRepository {
                         rs.getString("calificacion"),
                         rs.getDate("fecha_lanzamiento").toLocalDate(),
                         rs.getInt("duracion"), rs.getString("genero"), rs.getString("guion"), rs.getString("productora"), rs.getString("url_trailer"), rs.getString("poster"),
-                        rs.getFloat("valoracion_total")
+                        rs.getFloat("valoracion_total"), rs.getString("plataforma")
 
                     );
                     
@@ -76,18 +76,19 @@ public class ProduccionRepository {
                     
                 } else {
                     produccion = new Serie(
-                        rs.getInt("idproduccion"),
-                        rs.getString("titulo"),
-                        rs.getString("calificacion"),
-                        rs.getDate("fecha_lanzamiento").toLocalDate(),
-                        rs.getInt("duracion"),
-                        rs.getString("genero"),
-                        rs.getString("guion"),
-                        rs.getString("productora"),
-                        rs.getString("url_trailer"),
-                        rs.getString("poster"),
-                        rs.getFloat("valoracion_total")
-                    );
+                    		rs.getInt("idproduccion"),
+                    	    rs.getString("titulo"),
+                    	    rs.getString("calificacion"),
+                    	    rs.getDate("fecha_lanzamiento").toLocalDate(),
+                    	    rs.getInt("duracion"),
+                    	    rs.getString("genero"),
+                    	    rs.getString("guion"),
+                    	    rs.getString("productora"),
+                    	    rs.getString("url_trailer"),
+                    	    rs.getString("poster"),
+                    	    rs.getFloat("valoracion_total"),
+                    	    rs.getString("plataforma") // <- NUEVO CAMPO
+                    	);
                 }
                 
                 produccion.setActores(getActoresDeProduccion(produccion));
@@ -223,22 +224,24 @@ public class ProduccionRepository {
                             rs.getString("productora"),
                             rs.getString("url_trailer"),
                             rs.getString("poster"),
-                            rs.getFloat("valoracion_total")
+                            rs.getFloat("valoracion_total"),
+                            rs.getString("plataforma")
                         );
                     } else {
                         produccion = new Serie(
-                            rs.getInt("idproduccion"),
-                            rs.getString("titulo"),
-                            rs.getString("calificacion"),
-                            rs.getDate("fecha_lanzamiento").toLocalDate(),
-                            rs.getInt("duracion"),
-                            rs.getString("genero"),
-                            rs.getString("guion"),
-                            rs.getString("productora"),
-                            rs.getString("url_trailer"),
-                            rs.getString("poster"),
-                            rs.getFloat("valoracion_total")
-                        );
+                        		rs.getInt("idproduccion"),
+                        	    rs.getString("titulo"),
+                        	    rs.getString("calificacion"),
+                        	    rs.getDate("fecha_lanzamiento").toLocalDate(),
+                        	    rs.getInt("duracion"),
+                        	    rs.getString("genero"),
+                        	    rs.getString("guion"),
+                        	    rs.getString("productora"),
+                        	    rs.getString("url_trailer"),
+                        	    rs.getString("poster"),
+                        	    rs.getFloat("valoracion_total"),
+                        	    rs.getString("plataforma") // <- NUEVO CAMPO
+                        	);
                     }
 
                     produccion.setActores(getActoresDeProduccion(produccion));

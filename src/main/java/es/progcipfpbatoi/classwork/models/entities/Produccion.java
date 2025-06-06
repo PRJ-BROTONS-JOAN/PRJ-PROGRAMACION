@@ -17,6 +17,7 @@ public class Produccion {
     private String urlTrailer;
     private String poster;
     private float valoracionTotal;
+    private String plataforma;
     
     // Relaciones
     private List<Actor> actores;
@@ -27,23 +28,32 @@ public class Produccion {
     }
 
     public Produccion(int idproduccion, String titulo, Tipo tipo, String calificacion, 
-                    LocalDate fechaLanzamiento, int duracion, String genero, 
-                    String guion, String productora, String urlTrailer, 
-                    String poster, float valoracionTotal) {
-        this.idproduccion = idproduccion;
-        this.titulo = titulo;
-        this.tipo = tipo;
-        this.calificacion = calificacion;
-        this.fechaLanzamiento = fechaLanzamiento;
-        this.duracion = duracion;
-        this.genero = genero;
-        this.guion = guion;
-        this.productora = productora;
-        this.urlTrailer = urlTrailer;
-        this.poster = poster;
-        this.valoracionTotal = valoracionTotal;
-    }
+            LocalDate fechaLanzamiento, int duracion, String genero, 
+            String guion, String productora, String urlTrailer, 
+            String poster, float valoracionTotal, String plataforma) {
+		this.idproduccion = idproduccion;
+		this.titulo = titulo;
+		this.tipo = tipo;
+		this.calificacion = calificacion;
+		this.fechaLanzamiento = fechaLanzamiento;
+		this.duracion = duracion;
+		this.genero = genero;
+		this.guion = guion;
+		this.productora = productora;
+		this.urlTrailer = urlTrailer;
+		this.poster = poster;
+		this.valoracionTotal = valoracionTotal;
+		this.plataforma = plataforma; // nuevo
+	}
 
+
+	public String getPlataforma() {
+	    return plataforma;
+	}
+	
+	public void setPlataforma(String plataforma) {
+	    this.plataforma = plataforma;
+	}
     // Getters y setters
     public int getId() {
         return idproduccion;

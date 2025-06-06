@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title th:text="${contenido.titulo}">Detalle</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
+            background: linear-gradient(to right, #f5f5f5, #eaeaea);
             margin: 0;
             padding: 0;
             color: #333;
@@ -14,13 +18,15 @@
 
         header {
             background-color: #1e1e1e;
-            padding: 1rem;
+            padding: 1.5rem;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         header h1 {
             color: white;
             margin: 0;
+            font-size: 2rem;
         }
 
         .container {
@@ -36,24 +42,35 @@
             background-size: cover;
             background-position: center;
             border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
             margin-bottom: 2rem;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .poster:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .info {
-            max-width: 800px;
-            background-color: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 850px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 2rem 2.5rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out;
         }
 
         .info h2 {
-            margin-bottom: 1rem;
+            margin-top: 0;
+            color: #1e1e1e;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.3rem;
         }
 
         .info p {
             line-height: 1.6;
+            margin: 0.5rem 0;
         }
 
         .info strong {
@@ -64,6 +81,28 @@
             border-right: .15em solid orange;
             white-space: nowrap;
             overflow: hidden;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .poster {
+                width: 90%;
+                height: auto;
+            }
+
+            .info {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -85,13 +124,14 @@
         <p><strong>Género:</strong> <span th:text="${contenido.genero}"></span></p>
         <p><strong>Guion:</strong> <span th:text="${contenido.guion}"></span></p>
         <p><strong>Productora:</strong> <span th:text="${contenido.productora}"></span></p>
+        <p><strong>Plataforma:</strong> <span th:text="${contenido.plataforma}"></span></p>
         <p><strong>Valoración:</strong> <span th:text="${contenido.valoracionTotal} + ' / 10'"></span></p>
-        
+
         <p><strong>Directores:</strong>
-            <span th:each="d : ${contenido.directores}" th:text="${d.nombre + ' '}" />
+            <span th:each="d : ${contenido.directores}" th:text="${d.nombre + ' '}"></span>
         </p>
         <p><strong>Actores:</strong>
-            <span th:each="a : ${contenido.actores}" th:text="${a.nombre + ' '}" />
+            <span th:each="a : ${contenido.actores}" th:text="${a.nombre + ' '}"></span>
         </p>
 
         <h2>Descripción</h2>
@@ -101,13 +141,13 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const texto = `¡Bienvenido al detalle de esta producción! Aquí puedes ver toda la información de tu película o serie favorita: actores, directores, sinopsis, y mucho más.`;
+        const texto = `¡Bienvenido al detalle de esta producción! Aquí puedes ver toda la información de tu película o serie favorita: actores, directores, sinopsis y mucho más.`;
         const target = document.getElementById("descripcion");
         let index = 0;
 
         function escribirTexto() {
             if (index < texto.length) {
-                target.innerHTML += texto.charAt(index); // Cambiado a innerHTML
+                target.innerHTML += texto.charAt(index);
                 index++;
                 setTimeout(escribirTexto, 30);
             }
